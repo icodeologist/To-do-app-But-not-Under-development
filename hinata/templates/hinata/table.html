@@ -1,0 +1,43 @@
+{% extends "hinata/base.html" %}
+
+{%block title %}home{% endblock %}
+
+{% block content %}
+    <style>
+        table {
+            width: 30%; /* Adjust the width as needed */
+            border-collapse: collapse;
+            margin: 10  auto; /* Center the table horizontally */
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+<h2>Welcome {{ user_name }}</h2>
+<table>
+  <tr>
+    <th>Task Name</th>
+    <th>Complete Status</th>
+  </tr>
+    {% for item in items %}
+    <tr>
+        <td>{{ item.task_name }}</td>
+        <td>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="checkbox" name="complete" {% if item.complete %}checked{% endif %} onchange="this.form.submit()">
+            </form>
+        </td>
+    {% endfor %}
+    </tr>
+
+  <!-- Add more rows as needed -->
+</table>
+<button type="submit" class=" btn btn-secondary" name="update-the-todos">UPDATE</button>
+
+{% endblock %}

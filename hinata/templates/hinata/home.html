@@ -1,0 +1,84 @@
+{% extends "hinata/base.html" %}
+
+{% block title %}Home Page{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<style>
+    /* Centering the table container */
+    .table-container {
+        width: 80%; /* Adjust as needed */
+        margin: 10px auto;
+    }
+
+    /* Table styles */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        /* Adding padding to all sides of the table */
+        padding: 10px;
+    }
+
+    th, td {
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    /* Centering the h2 tag */
+    h2 {
+        text-align: center;
+        /* Adding padding between the search bar and h2 */
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    /* Fade-in animation */
+    @keyframes fade-in {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    body {
+        animation: fade-in 1s ease-in;
+    }
+</style>
+
+<h2>Welcome {{ user_name }}</h2>
+
+<div class="table-container">
+    <table>
+        <tr>
+            <th>Task Name</th>
+            <th>Complete Status</th>
+        </tr>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.task_name }}</td>
+            {%if item.complete == True%}
+                <td>Completed</td>
+            {% else %}
+                <td>In progress</td>
+            {% endif %}
+            <td>
+                <a href="{% url 'update' item.task_name%}"><button type="submit" class="btn btn-primary">UPDATE</button></a>
+                <a href="{% url 'delete' item.task_name %}"><button type="submit" class="btn btn-primary">DELETE</button></a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<!-- Add button padding -->
+<div style="text-align: center; padding-top: 20px;">
+    <a href="{% url 'add' %}" style="text-decoration: none;">
+        <button type="submit" class="btn btn-primary">ADD</button>
+    </a>
+</div>
+
+{% endblock %}
